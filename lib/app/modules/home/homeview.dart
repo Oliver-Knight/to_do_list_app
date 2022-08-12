@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:flutter/src/widgets/framework.dart';
@@ -49,7 +51,7 @@ class HomePage extends GetView<HomeController> {
                                   child: InkWell(
                                       onTap: () {
                                         controller.taskSelect(item: task, index: controller.tasks.indexOf(task));
-                                        controller.todoListDefine();
+                                        controller.todoListDefine();  
                                         Get.to(DetailPage(),
                                             transition: Transition.zoom);
                                       },

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list_app/app/core/utils/type.dart';
-import 'package:to_do_list_app/app/core/values/color.dart';
 import 'package:to_do_list_app/app/data/models/task_model.dart';
 import 'package:to_do_list_app/app/modules/home/homecontroller.dart';
 import 'package:to_do_list_app/app/modules/home/widgets/task_icon_widget.dart';
@@ -17,10 +16,15 @@ class NewTestCard extends StatefulWidget {
 }
 
 class _NewTestCardState extends State<NewTestCard> {
+  final HomeController controller = Get.find<HomeController>();
+  Map<String, Icon> iconList = ToDoIcons.taskIcons();
+  @override
+  void dispose() {
+    super.dispose();
+    
+  }
   @override
   Widget build(BuildContext context) {
-    final HomeController controller = Get.find<HomeController>();
-    Map<String, Icon> iconList = ToDoIcons.taskIcons();
     return Container(
       width: Get.width / 2,
       height: Get.height / 2,

@@ -259,6 +259,9 @@ class _DetailPageState extends State<DetailPage> {
                                               ? "${timeOfDay!.hour} : ${timeOfDay!.minute}"
                                               : "${initialTime.hour} : ${initialTime.minute}"));
                                   Get.back();
+                                  setState(() {
+                                         widget.controller.todoListDefine();
+                                      });
                                   widget.controller.taskNameC.clear();
                                   if (result) {
                                     EasyLoading.showSuccess("Success uploated");

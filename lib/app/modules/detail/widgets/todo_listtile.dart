@@ -22,6 +22,10 @@ class ToDoListTile extends StatefulWidget {
 class _ToDoListTileState extends State<ToDoListTile> {
   final HomeController controller = Get.find<HomeController>();
   @override
+  void dispose() {
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     Map<String, Color> colorList = ToDoColor.iconColors;
     return AbsorbPointer(

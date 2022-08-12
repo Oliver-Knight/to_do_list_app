@@ -21,6 +21,10 @@ class _AddTaskState extends State<AddTask> {
   TimeOfDay initialTime = TimeOfDay.now();
   TimeOfDay? timeOfDay;
   @override
+  void dispose() {
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(

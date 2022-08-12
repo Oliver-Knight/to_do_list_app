@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list_app/app/core/utils/type.dart';
@@ -69,7 +71,12 @@ class HomeController extends GetxController {
   }
 
   void taskSelect({required TaskModel item, int? index}) {
+    log('item: ${item.toDoItems}');
     task.value = item;
+    if(task.value?.toDoItems == null){
+      task.value?.copywith(toDoItems: []);
+    }
+    log('task: ${task.value?.toDoItems}');
     this.index.value = index ?? 0;
   }
 
@@ -84,6 +91,7 @@ class HomeController extends GetxController {
       todoitem.add(todoModel.toJson());
       todos = [];
       tasks[index.value] = newTask;
+      taskRepository.writeTask(tasks);
       return true;
     }
   }
