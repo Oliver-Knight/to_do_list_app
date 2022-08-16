@@ -113,9 +113,7 @@ class _DetailPageState extends State<DetailPage> {
                                               timeofday: timeOfDay != null
                                                   ? "${timeOfDay!.hour} : ${timeOfDay!.minute}"
                                                   : "${initialTime.hour} : ${initialTime.minute}"));
-                                      setState(() {
                                          widget.controller.todoListDefine();
-                                      });
                                       Get.back();
                                       widget.controller.taskNameC.clear();
                                       if (result) {
@@ -259,9 +257,7 @@ class _DetailPageState extends State<DetailPage> {
                                               ? "${timeOfDay!.hour} : ${timeOfDay!.minute}"
                                               : "${initialTime.hour} : ${initialTime.minute}"));
                                   Get.back();
-                                  setState(() {
-                                         widget.controller.todoListDefine();
-                                      });
+                                  widget.controller.todoListDefine();
                                   widget.controller.taskNameC.clear();
                                   if (result) {
                                     EasyLoading.showSuccess("Success uploated");

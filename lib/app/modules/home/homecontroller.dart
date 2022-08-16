@@ -74,6 +74,7 @@ class HomeController extends GetxController {
     log('item: ${item.toDoItems}');
     task.value = item;
     if(task.value?.toDoItems == null){
+      print('yes');
       task.value?.copywith(toDoItems: []);
     }
     log('task: ${task.value?.toDoItems}');
