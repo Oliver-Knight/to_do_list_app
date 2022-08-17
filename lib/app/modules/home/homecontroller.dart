@@ -16,7 +16,7 @@ class HomeController extends GetxController {
   final RxString type = personal.obs;
   final RxBool deleting = false.obs;
   final RxInt index = 0.obs;
-  var task = Rx<TaskModel?>(null);
+  Rx<TaskModel> task = TaskModel(title: '', icon: '', color: '').obs;
   RxList todoitem = <dynamic>[].obs;
   RxList todoDone = <dynamic>[].obs;
 
@@ -33,8 +33,17 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     tasks = taskRepository.readTask().obs;
-    print(tasks);
     ever(tasks, (_) => taskRepository.writeTask(tasks));
+    ever(task, (_) => print("Call : ${task.value}"));
+  }
+
+  @override
+  void dispose() {
+    taskF.dispose();
+    taskNameC.dispose();
+    taskController.dispose();
+    taskNameF.dispose();
+    super.dispose();
   }
 
   void iconTypeChange(String type) {
@@ -57,27 +66,26 @@ class HomeController extends GetxController {
     return deleting.value;
   }
 
-  void deleteSpecificTask(int index, bool done){
+  void deleteSpecificTask(int index, bool done) {
     final dynamic deleteItem;
-    if (done == false){
-       deleteItem = todoitem[index];
-    }
-    else{
+    if (done == false) {
+      deleteItem = todoitem[index];
+    } else {
       deleteItem = todoDone[index];
     }
-    task.value!.toDoItems!.remove(deleteItem);
+    task.value.toDoItems!.remove(deleteItem);
     todoitem.remove(todoitem[index]);
-    tasks[this.index.value] = task.value!;
+    tasks[this.index.value] = task.value;
   }
 
   void taskSelect({required TaskModel item, int? index}) {
-    log('item: ${item.toDoItems}');
+    log('item: ${item}');
     task.value = item;
-    if(task.value?.toDoItems == null){
+    if (task.value.toDoItems == null) {
       print('yes');
-      task.value?.copywith(toDoItems: []);
+      task.value = task.value.copywith(toDoItems: []);
     }
-    log('task: ${task.value?.toDoItems}');
+    log('task: ${task.value.toDoItems}');
     this.index.value = index ?? 0;
   }
 
@@ -85,12 +93,11 @@ class HomeController extends GetxController {
     if (checkDublicate(tasks[index.value], todoModel.title) == true) {
       return false;
     } else {
-      todos = task.toDoItems ?? [];
+      final todos = task.toDoItems ?? [];
       //todos = this.task.value!.toDoItems ?? [];
-      todos?.add(todoModel.toJson());
+      todos.add(todoModel.toJson());
       TaskModel newTask = task.copywith(toDoItems: todos);
       todoitem.add(todoModel.toJson());
-      todos = [];
       tasks[index.value] = newTask;
       taskRepository.writeTask(tasks);
       return true;
@@ -108,10 +115,10 @@ class HomeController extends GetxController {
   }
 
   void todoListDefine() {
-    if (task.value!.toDoItems != null) {
+    if (task.value.toDoItems != null) {
       todoDone.clear();
       todoitem.clear();
-      for (var todo in task.value!.toDoItems!) {
+      for (var todo in task.value.toDoItems!) {
         if (todo['done'] == true) {
           todoDone.add(todo);
         } else {
@@ -121,13 +128,13 @@ class HomeController extends GetxController {
     }
   }
 
-  void todoDoneCheck(int index){
-    Map<String,dynamic> todo = todoitem[index];
-    int taskIndex = task.value!.toDoItems!.indexOf(todo);
+  void todoDoneCheck(int index) {
+    Map<String, dynamic> todo = todoitem[index];
+    int taskIndex = task.value.toDoItems!.indexOf(todo);
     todoitem.remove(todo);
     todo['done'] = true;
     todoDone.add(todo);
-    task.value!.toDoItems![taskIndex] = todo;
-    tasks[this.index.value] = task.value!;
+    task.value.toDoItems![taskIndex] = todo;
+    tasks[this.index.value] = task.value;
   }
 }

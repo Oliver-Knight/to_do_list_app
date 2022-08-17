@@ -43,5 +43,5 @@ class TaskModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [title, icon, color];
+  List<Object?> get props => [title, icon, color,toDoItems];
 }

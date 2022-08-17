@@ -13,6 +13,7 @@ import 'package:to_do_list_app/app/core/utils/extensions.dart';
 import 'package:to_do_list_app/app/modules/home/widgets/new_test_card.dart';
 import 'package:to_do_list_app/app/modules/home/widgets/task_add.dart';
 import 'package:to_do_list_app/app/modules/home/widgets/task_card.dart';
+import 'package:to_do_list_app/app/modules/report/report.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
@@ -82,7 +83,7 @@ class HomePage extends GetView<HomeController> {
                                                 Get.back();
                                               },
                                               child: const Text("Cancel"))),
-                                      child: TaskCard(task: task)),
+                                      child: TaskCard(task: task,)),
                                 ))
                             .toList(),
                         const NewTestCard(),
@@ -101,7 +102,7 @@ class HomePage extends GetView<HomeController> {
                         : ToDoColor.iconColors[shop],
                     onPressed: () {
                       controller.taskNameC.clear();
-                      controller.task.value = null;
+                      controller.task.value = TaskModel(title: '', icon: '', color: '');
                       Get.to(const AddTask(), transition: Transition.zoom);
                     },
                     tooltip: "Add Task",
@@ -123,7 +124,9 @@ class HomePage extends GetView<HomeController> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(const ReportScreen(),transition: Transition.zoom);
+                        },
                         icon: const Icon(Icons.menu),
                         splashRadius: 20),
                     IconButton(

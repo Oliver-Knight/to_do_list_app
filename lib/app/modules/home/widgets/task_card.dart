@@ -8,7 +8,7 @@ import 'package:to_do_list_app/app/widgets/icons.dart';
 
 class TaskCard extends StatefulWidget {
   HomeController controller = Get.find<HomeController>();
-  TaskModel task;
+  final TaskModel task;
   TaskCard({Key? key, required this.task}) : super(key: key);
 
   @override
@@ -17,12 +17,18 @@ class TaskCard extends StatefulWidget {
 
 class _TaskCardState extends State<TaskCard> {
   Map<String, Icon> iconList = ToDoIcons.taskIcons();
-  @override
-  void initState() {
-    super.initState();
-  }
+  RxList taskFinish = [].obs;
   @override
   Widget build(BuildContext context) {
+    if (widget.task.toDoItems != null){
+      for (var i in widget.task.toDoItems!){
+        if(i['done'] == true){
+          if(!taskFinish.contains(widget.task.toDoItems!.indexOf(i))){
+            taskFinish.add(widget.task.toDoItems!.indexOf(i));
+          }
+        }
+      }
+    }
     return  Container(
         height: Get.height /4.4,
         width: Get.width / 2,
@@ -46,7 +52,7 @@ class _TaskCardState extends State<TaskCard> {
           children: [
              widget.task.toDoItems != null && widget.task.toDoItems!.isNotEmpty ? StepProgressIndicator(
               totalSteps: widget.task.toDoItems!.length,
-              currentStep:0,
+              currentStep:taskFinish.length,
               padding: 0,
               selectedColor: ToDoColor.iconColors[widget.task.color]!,
               unselectedColor: Colors.white,

@@ -49,12 +49,12 @@ class _DetailPageState extends State<DetailPage> {
             ),
             Row(
               children: [
-                iconList[widget.controller.task.value!.icon],
+                iconList[widget.controller.task.value.icon],
                 const SizedBox(
                   width: 20,
                 ),
                 Text(
-                  widget.controller.task.value!.title,
+                  widget.controller.task.value.title,
                   style: TextStyle(
                     fontSize: 16.5.sp,
                     fontWeight: FontWeight.w500,
@@ -66,9 +66,7 @@ class _DetailPageState extends State<DetailPage> {
             const SizedBox(
               height: 20,
             ),
-            if (widget.controller.task.value!.toDoItems == null ||
-                widget.controller.task.value!.toDoItems!.isEmpty) ...[
-              Text("${widget.controller.task.value!.toDoItems}"),
+            if (widget.controller.task.value.toDoItems!.isEmpty) ...[
               SizedBox(
                 height: Get.height / 2,
                 child: Column(
@@ -99,22 +97,24 @@ class _DetailPageState extends State<DetailPage> {
                                               ToDoColor.iconColors[widget
                                                   .controller
                                                   .task
-                                                  .value!
+                                                  .value
                                                   .icon])),
                                   onPressed: () {
                                     if (widget.controller.taskkey.currentState!
                                             .validate() ==
                                         true) {
                                       bool result = widget.controller.updateTask(
-                                          widget.controller.task.value!,
+                                          widget.controller.task.value,
                                           ToDoModel(
                                               title: widget
                                                   .controller.taskNameC.text,
                                               timeofday: timeOfDay != null
                                                   ? "${timeOfDay!.hour} : ${timeOfDay!.minute}"
                                                   : "${initialTime.hour} : ${initialTime.minute}"));
-                                         widget.controller.todoListDefine();
                                       Get.back();
+                                      setState(() {
+                                        widget.controller.todoListDefine();
+                                      });
                                       widget.controller.taskNameC.clear();
                                       if (result) {
                                         EasyLoading.showSuccess(
@@ -130,7 +130,7 @@ class _DetailPageState extends State<DetailPage> {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
                                 ToDoColor.iconColors[
-                                    widget.controller.task.value!.icon])),
+                                    widget.controller.task.value.icon])),
                         icon: const Icon(
                           Icons.add_task,
                         ),
@@ -162,7 +162,7 @@ class _DetailPageState extends State<DetailPage> {
                             currentStep: completeTask,
                             padding: 0,
                             selectedColor: ToDoColor.iconColors[
-                                widget.controller.task.value!.icon]!,
+                                widget.controller.task.value.icon]!,
                             unselectedColor: Colors.black12),
                       ),
                     ),
@@ -179,7 +179,7 @@ class _DetailPageState extends State<DetailPage> {
                       ...widget.controller.todoitem
                           .map((todo) => ToDoListTile(
                                 todo: todo,
-                                color: widget.controller.task.value!.icon,
+                                color: widget.controller.task.value.icon,
                                 slidableKey:
                                     widget.controller.todoitem.indexOf(todo),
                               ))
@@ -205,7 +205,7 @@ class _DetailPageState extends State<DetailPage> {
                       ...widget.controller.todoDone
                           .map((todo) => ToDoListTile(
                                 todo: todo,
-                                color: widget.controller.task.value!.icon,
+                                color: widget.controller.task.value.icon,
                                 slidableKey:
                                     widget.controller.todoitem.indexOf(todo),
                               ))
@@ -216,15 +216,15 @@ class _DetailPageState extends State<DetailPage> {
           ],
         ),
       ),
-      floatingActionButton: widget.controller.task.value!.toDoItems == null
+      floatingActionButton: widget.controller.task.value.toDoItems == null
           ? null
-          : widget.controller.task.value!.toDoItems!.isEmpty
+          : widget.controller.task.value.toDoItems!.isEmpty
               ? null
               : Form(
                   key: widget.controller.taskkey,
                   child: FloatingActionButton(
                     backgroundColor: ToDoColor
-                        .iconColors[widget.controller.task.value!.icon],
+                        .iconColors[widget.controller.task.value.icon],
                     onPressed: () {
                       //todo
                       Get.defaultDialog(
@@ -243,13 +243,13 @@ class _DetailPageState extends State<DetailPage> {
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
                                       ToDoColor.iconColors[
-                                          widget.controller.task.value!.icon])),
+                                          widget.controller.task.value.icon])),
                               onPressed: () {
                                 if (widget.controller.taskkey.currentState!
                                         .validate() ==
                                     true) {
                                   bool result = widget.controller.updateTask(
-                                      widget.controller.task.value!,
+                                      widget.controller.task.value,
                                       ToDoModel(
                                           title:
                                               widget.controller.taskNameC.text,

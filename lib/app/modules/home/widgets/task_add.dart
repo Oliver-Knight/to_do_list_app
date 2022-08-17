@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:to_do_list_app/app/core/utils/type.dart';
 import 'package:to_do_list_app/app/core/values/color.dart';
+import 'package:to_do_list_app/app/data/models/task_model.dart';
 import 'package:to_do_list_app/app/data/models/todo_item_model.dart';
 import 'package:to_do_list_app/app/modules/home/homecontroller.dart';
 import 'package:intl/intl.dart';
@@ -39,9 +40,9 @@ class _AddTaskState extends State<AddTask> {
                   onPressed: () {
                     Get.back();
                     controller.taskNameC.clear();
-                    controller.task.value = null;
+                    controller.task.value = TaskModel(title: '', icon: '', color: '');
                   },
-                  icon: const Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back_ios_new_outlined),
                   splashRadius: 20,
                 ),
                 const Text(
@@ -164,7 +165,7 @@ class _AddTaskState extends State<AddTask> {
                                     "Please choose  Task List");
                               } else {
                                 bool result = controller.updateTask(
-                                    controller.task.value!,
+                                    controller.task.value,
                                     ToDoModel(
                                         title: controller.taskNameC.text,
                                         timeofday: timeOfDay != null
@@ -172,7 +173,7 @@ class _AddTaskState extends State<AddTask> {
                                             : "${initialTime.hour} : ${initialTime.minute}"));
                                 Get.back();
                                 controller.taskNameC.clear();
-                                controller.task.value = null;
+                                controller.task.value = const TaskModel(title: '', icon: '', color: '');
                                 if (result) {
                                   EasyLoading.showSuccess("Success uploated");
                                 } else {
