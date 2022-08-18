@@ -287,8 +287,10 @@ class _DetailPageState extends State<DetailPage> {
           onEditingComplete: () {
             widget.controller.taskNameF.unfocus();
           },
-          validator: (value) => widget.controller.taskNameC.text == ''
+          validator: (value) => widget.controller.taskNameC.text.isEmpty
               ? "You need to fill your task!"
+              :widget.controller.taskNameC.text.startsWith(" ")
+              ? "Task name cannot start with 'SPACE'!"
               : null,
           decoration: const InputDecoration(
               isDense: true, border: OutlineInputBorder()),

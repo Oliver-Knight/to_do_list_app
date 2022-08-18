@@ -110,7 +110,10 @@ class _NewTestCardState extends State<NewTestCard> {
                         focusNode: controller.taskF,
                         validator: (e) {
                           if (controller.taskController.text == '') {
-                            return "You need to fill the Task title";
+                            return "You need to fill the Task title!";
+                          }
+                          if (controller.taskController.text.startsWith(' ')) {
+                            return "Task List cannot start with 'SPACE'!";
                           }
                           if(controller.taskController.text.length > 30){
                             return "Title count must less than 30 characters";

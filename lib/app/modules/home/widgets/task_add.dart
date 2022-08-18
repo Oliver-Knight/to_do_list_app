@@ -25,6 +25,7 @@ class _AddTaskState extends State<AddTask> {
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +41,8 @@ class _AddTaskState extends State<AddTask> {
                   onPressed: () {
                     Get.back();
                     controller.taskNameC.clear();
-                    controller.task.value = TaskModel(title: '', icon: '', color: '');
+                    controller.task.value =
+                        TaskModel(title: '', icon: '', color: '');
                   },
                   icon: const Icon(Icons.arrow_back_ios_new_outlined),
                   splashRadius: 20,
@@ -59,9 +61,11 @@ class _AddTaskState extends State<AddTask> {
                   onEditingComplete: () {
                     controller.taskNameF.unfocus();
                   },
-                  validator: (value) => controller.taskNameC.text == ''
+                  validator: (value) => controller.taskNameC.text.isEmpty
                       ? "You need to fill your task!"
-                      : null,
+                      : controller.taskNameC.text.startsWith(' ')
+                          ? "Task name cannot start with 'SPACE'"
+                          : null,
                   decoration: const InputDecoration(
                       hintText: "Task...", border: OutlineInputBorder()),
                 ),
@@ -173,7 +177,8 @@ class _AddTaskState extends State<AddTask> {
                                             : "${initialTime.hour} : ${initialTime.minute}"));
                                 Get.back();
                                 controller.taskNameC.clear();
-                                controller.task.value = const TaskModel(title: '', icon: '', color: '');
+                                controller.task.value = const TaskModel(
+                                    title: '', icon: '', color: '');
                                 if (result) {
                                   EasyLoading.showSuccess("Success uploated");
                                 } else {
