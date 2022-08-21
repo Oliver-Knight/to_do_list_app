@@ -164,7 +164,7 @@ class _AddTaskState extends State<AddTask> {
                           onPressed: () {
                             if (controller.taskkey.currentState!.validate() ==
                                 true) {
-                              if (controller.task.value == null) {
+                              if (controller.task.value.toDoItems == null) {
                                 EasyLoading.showError(
                                     "Please choose  Task List");
                               } else {

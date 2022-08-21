@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return   GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      showPerformanceOverlay: false,
       title: 'To Do List App',
       home: const HomePage(),
       initialBinding: HomeBinding(),

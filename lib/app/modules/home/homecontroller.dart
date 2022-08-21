@@ -99,7 +99,6 @@ class HomeController extends GetxController {
       TaskModel newTask = task.copywith(toDoItems: todos);
       todoitem.add(todoModel.toJson());
       tasks[index.value] = newTask;
-      taskRepository.writeTask(tasks);
       return true;
     }
   }
@@ -137,4 +136,33 @@ class HomeController extends GetxController {
     task.value.toDoItems![taskIndex] = todo;
     tasks[this.index.value] = task.value;
   }
+
+  void todoEdit(Map<String,dynamic> currentTask, Map<String,dynamic> newTask){
+    final int index = task.value.toDoItems!.indexOf(currentTask);
+    task.value.toDoItems![index] = newTask;
+    tasks[this.index.value] = task.value;
+  }
+
+  double taskDone(){
+    double result = 0.0;
+    List<List<dynamic>> unDone =[];
+    List<List<dynamic>> done =[];
+    int tDone = 0;
+    int tnDone = 0;
+    for(TaskModel task in tasks) {
+      if(task.toDoItems != null){
+        done.add(task.toDoItems!.where((item) => item['done'] == true ).toList());
+        unDone.add(task.toDoItems!.where((item) => item['done'] == false ).toList());
+      }
+    }
+    for ( int i = 0; i < done.length; i++){
+      tDone += done[i].length;
+    }
+    for ( int i = 0; i < unDone.length; i++){
+      tnDone += unDone[i].length;
+    } 
+    result = (tDone / (tDone + tnDone));
+    return result;
+  }
+  
 }

@@ -21,6 +21,8 @@ class ToDoListTile extends StatefulWidget {
 
 class _ToDoListTileState extends State<ToDoListTile> {
   final HomeController controller = Get.find<HomeController>();
+  TimeOfDay initialTime = TimeOfDay.now();
+  TimeOfDay? timeOfDay;
   @override
   void dispose() {
     super.dispose();
@@ -46,7 +48,19 @@ class _ToDoListTileState extends State<ToDoListTile> {
                 foregroundColor: const Color.fromARGB(255, 255, 255, 255),
                 icon: Icons.delete,
                 label: 'Delete',
-              )
+              ),
+              SlidableAction(onPressed: (_){
+                  Get.defaultDialog(
+                    title: "Eidt Task",
+                    content: dialogContent(),
+                    confirm: ElevatedButton(onPressed: (){}, child: const Text("Confirm")),
+                    cancel: TextButton(onPressed: (){Get.back();}, child: const Text("Cancel"))
+                  );
+              },
+              backgroundColor: Colors.yellow,
+              foregroundColor: Colors.white,
+              icon: Icons.edit,
+                label: 'Edit',)
             ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
@@ -93,6 +107,61 @@ class _ToDoListTileState extends State<ToDoListTile> {
           ),
         ),
       ),
+    );
+  }
+   Widget dialogContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          controller: controller.taskNameC,
+          focusNode: controller.taskNameF,
+          onEditingComplete: () {
+            controller.taskNameF.unfocus();
+          },
+          validator: (value) => controller.taskNameC.text.isEmpty
+              ? "You need to fill your task!"
+              :controller.taskNameC.text.startsWith(" ")
+              ? "Task name cannot start with 'SPACE'!"
+              : null,
+          decoration: const InputDecoration(
+              isDense: true, border: OutlineInputBorder()),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const Text(
+          "Choose Time",
+          style: TextStyle(
+              fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Container(
+          width: Get.width,
+          height: 50,
+          child: OutlinedButton(
+            onPressed: () async {
+              timeOfDay = await showTimePicker(
+                context: context,
+                initialTime: initialTime,
+                initialEntryMode: TimePickerEntryMode.dial,
+              );
+              if (timeOfDay != null && timeOfDay != initialTime) {
+                setState(() {
+                  initialTime = timeOfDay!;
+                });
+              }
+            },
+            child: Text(
+              "${initialTime.hour}:${initialTime.minute}",
+              style: const TextStyle(fontSize: 16, color: Colors.black),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

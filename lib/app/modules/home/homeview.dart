@@ -14,6 +14,7 @@ import 'package:to_do_list_app/app/modules/home/widgets/new_test_card.dart';
 import 'package:to_do_list_app/app/modules/home/widgets/task_add.dart';
 import 'package:to_do_list_app/app/modules/home/widgets/task_card.dart';
 import 'package:to_do_list_app/app/modules/report/report.dart';
+import 'package:to_do_list_app/app/modules/setting/settingview.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
@@ -130,7 +131,9 @@ class HomePage extends GetView<HomeController> {
                         icon: const Icon(Icons.menu),
                         splashRadius: 20),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(const SettingScreen(),transition: Transition.zoom);
+                      },
                       icon: const Icon(Icons.settings),
                       splashRadius: 20,
                     )

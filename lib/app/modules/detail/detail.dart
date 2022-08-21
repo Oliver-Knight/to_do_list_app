@@ -10,7 +10,6 @@ import 'package:to_do_list_app/app/core/values/color.dart';
 import 'package:to_do_list_app/app/data/models/todo_item_model.dart';
 import 'package:to_do_list_app/app/modules/detail/widgets/todo_listtile.dart';
 import 'package:to_do_list_app/app/modules/home/homecontroller.dart';
-import 'package:to_do_list_app/app/modules/home/widgets/task_add.dart';
 import 'package:to_do_list_app/app/widgets/icons.dart';
 
 class DetailPage extends StatefulWidget {
@@ -109,8 +108,8 @@ class _DetailPageState extends State<DetailPage> {
                                               title: widget
                                                   .controller.taskNameC.text,
                                               timeofday: timeOfDay != null
-                                                  ? "${timeOfDay!.hour} : ${timeOfDay!.minute}"
-                                                  : "${initialTime.hour} : ${initialTime.minute}"));
+                                            ? "${timeOfDay!.hour} : ${timeOfDay!.minute}"
+                                            : "${initialTime.hour} : ${initialTime.minute}"));
                                       Get.back();
                                       setState(() {
                                         widget.controller.todoListDefine();
@@ -254,8 +253,8 @@ class _DetailPageState extends State<DetailPage> {
                                           title:
                                               widget.controller.taskNameC.text,
                                           timeofday: timeOfDay != null
-                                              ? "${timeOfDay!.hour} : ${timeOfDay!.minute}"
-                                              : "${initialTime.hour} : ${initialTime.minute}"));
+                                            ? "${timeOfDay!.hour} : ${timeOfDay!.minute}"
+                                            : "${initialTime.hour} : ${initialTime.minute}"));
                                   Get.back();
                                   widget.controller.todoListDefine();
                                   widget.controller.taskNameC.clear();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ToDoModel{
   String title;
+  //TimeOfDay timeofday;
   String timeofday;
   bool done;
   ToDoModel ({required this.title, required this.timeofday, this.done = false});
